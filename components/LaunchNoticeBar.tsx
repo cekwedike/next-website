@@ -9,12 +9,15 @@ export function LaunchNoticeBar() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    try {
-      if (localStorage.getItem(STORAGE_KEY)) return;
-    } catch {
-      /* ignore */
-    }
-    setVisible(true);
+    const frame = requestAnimationFrame(() => {
+      try {
+        if (localStorage.getItem(STORAGE_KEY)) return;
+      } catch {
+        /* ignore */
+      }
+      setVisible(true);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   function dismiss() {

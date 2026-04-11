@@ -9,20 +9,26 @@ export function InitialLoader() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    let skip = false;
-    try {
-      if (sessionStorage.getItem(STORAGE_KEY)) {
-        skip = true;
-      } else {
-        sessionStorage.setItem(STORAGE_KEY, "1");
+    let hideTimer: number | undefined;
+    const frame = requestAnimationFrame(() => {
+      let skip = false;
+      try {
+        if (sessionStorage.getItem(STORAGE_KEY)) {
+          skip = true;
+        } else {
+          sessionStorage.setItem(STORAGE_KEY, "1");
+        }
+      } catch {
+        skip = false;
       }
-    } catch {
-      skip = false;
-    }
-    if (skip) return;
-    setVisible(true);
-    const t = window.setTimeout(() => setVisible(false), 1500);
-    return () => window.clearTimeout(t);
+      if (skip) return;
+      setVisible(true);
+      hideTimer = window.setTimeout(() => setVisible(false), 1500);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      if (hideTimer !== undefined) window.clearTimeout(hideTimer);
+    };
   }, []);
 
   return (

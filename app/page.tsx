@@ -4,7 +4,6 @@ import { AnimatedItem, AnimatedSection } from "@/components/AnimatedSection";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { CountUpWhenVisible } from "@/components/CountUpWhenVisible";
 import { HomeHeroSection } from "@/components/HomeHeroSection";
-import { HowItWorksTimelineLine } from "@/components/HowItWorksTimeline";
 import { PhaseCard } from "@/components/PhaseCard";
 import { defaultDescription, ogImageUrl, siteUrl } from "@/lib/site";
 
@@ -56,6 +55,9 @@ export const metadata: Metadata = {
     images: [{ url: ogImageUrl, width: 1200, height: 630, alt: "NEXT live music" }],
   },
   twitter: {
+    card: "summary_large_image",
+    site: "@EnergizeMusic",
+    creator: "@EnergizeMusic",
     title:
       "NEXT: New Era Xceptional Talent | Afrogospel Competition Africa",
     description: defaultDescription,
@@ -112,37 +114,60 @@ export default function HomePage() {
 
       <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="relative grid gap-10 pl-10 md:grid-cols-3 md:pl-8">
-            <HowItWorksTimelineLine />
-            <AnimatedItem variant="heading" className="max-w-2xl md:col-span-3">
+          <AnimatedSection className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+            <AnimatedItem variant="heading" className="max-w-2xl md:col-span-2 lg:col-span-3">
               <h2 className="font-display text-3xl tracking-wide text-next-text sm:text-4xl">
-                The journey
+                Your Journey to the Top
               </h2>
               <p className="mt-2 text-base text-next-text-secondary sm:text-lg">
-                From first audition tape to label-ready masters — NEXT is built as a ladder, not a lottery.
+                From online auditions to the grand finale — NEXT is built as a ladder, not a lottery.
               </p>
             </AnimatedItem>
             <AnimatedItem variant="card">
               <PhaseCard
                 phase="Phase 01"
-                title="Discovery"
-                description="Open submissions, city auditions, and digital showcases curated by Energize Music A&R."
+                title="Submit"
+                description="Artists and producers enter through the NEXT portal; judges select the top 50 in each lane — open to all of Africa."
                 accent="primary"
               />
             </AnimatedItem>
             <AnimatedItem variant="card">
               <PhaseCard
                 phase="Phase 02"
-                title="Incubator"
-                description="Artist development, vocal coaching, and studio weeks with top Afrogospel producers."
+                title="Top 50 Selected"
+                description="The top 50 artists and producers are showcased on Energize Music social channels across the continent."
                 accent="secondary"
               />
             </AnimatedItem>
             <AnimatedItem variant="card">
               <PhaseCard
                 phase="Phase 03"
-                title="Spotlight"
-                description="Block parties, the compilation album, and the KCA-stage moment the world sees."
+                title="Public Votes"
+                description="Fans vote free for three weeks to take the field from 50 down to 20 — every voice counts."
+                accent="tertiary"
+              />
+            </AnimatedItem>
+            <AnimatedItem variant="card">
+              <PhaseCard
+                phase="Phase 04"
+                title="Album Creation"
+                description="The top 10 record the ENERGIZE Afrogospel Album in professional sessions with behind-the-scenes drops for fans."
+                accent="primary"
+              />
+            </AnimatedItem>
+            <AnimatedItem variant="card">
+              <PhaseCard
+                phase="Phase 05"
+                title="Block Parties"
+                description="The top 20 headline pan-African block parties — live album previews and community celebrations."
+                accent="secondary"
+              />
+            </AnimatedItem>
+            <AnimatedItem variant="card">
+              <PhaseCard
+                phase="Phase 06"
+                title="Launch Concert"
+                description="The album officially drops and the top 10 perform at a major launch concert — the movement goes permanent."
                 accent="tertiary"
               />
             </AnimatedItem>
