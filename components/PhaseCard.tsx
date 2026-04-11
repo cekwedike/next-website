@@ -33,7 +33,7 @@ export function PhaseCard({
       <h3 className="mt-2 font-display text-2xl tracking-wide text-next-text md:text-3xl">
         {title}
       </h3>
-      <p className="mt-3 text-sm leading-relaxed text-next-text-secondary md:text-base">
+      <p className="mt-3 text-base leading-relaxed text-next-text-secondary">
         {description}
       </p>
     </article>

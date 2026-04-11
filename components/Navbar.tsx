@@ -5,12 +5,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const navItems: { href: string; label: string; live?: boolean }[] = [
+const navItems: { href: string; label: string }[] = [
   { href: "/", label: "Home" },
   { href: "/how-it-works", label: "How It Works" },
   { href: "/artists", label: "Artists" },
   { href: "/producers", label: "Producers" },
-  { href: "/vote", label: "Vote", live: true },
   { href: "/block-parties", label: "Block Parties" },
   { href: "/album", label: "Album" },
   { href: "/kca", label: "KCA" },
@@ -44,7 +43,7 @@ export function Navbar() {
   const linkClass = (href: string, mobile = false) => {
     const active = isActive(pathname, href);
     const base =
-      "relative text-sm font-medium tracking-wide transition-colors hover:text-next-text";
+      "relative text-sm font-medium tracking-wide transition-colors hover:text-next-text min-h-11 inline-flex items-center";
     const desktop = active ? "text-next-text" : "text-next-text-secondary";
     const mobileBase = `block border-l-4 py-3 pl-4 pr-6 ${base}`;
     const mobileActive = active
@@ -61,35 +60,58 @@ export function Navbar() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="group shrink-0" onClick={() => setOpen(false)}>
-          <span className="font-display text-4xl leading-none tracking-wide text-next-text sm:text-5xl">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:gap-6 lg:px-8">
+        <Link href="/" className="group shrink-0 min-h-11" onClick={() => setOpen(false)}>
+          <motion.span
+            className="inline-block font-display text-4xl leading-none tracking-wide text-next-text sm:text-5xl"
+            animate={{ scale: [1, 1.02, 1] }}
+            transition={{
+              duration: 3.2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
             NEXT
-          </span>
-          <span className="mt-0.5 block text-xs font-medium tracking-widest text-next-secondary">
+          </motion.span>
+          <span className="mt-0.5 block text-sm font-medium tracking-widest text-next-secondary">
             by Energize Music
           </span>
         </Link>
 
-        <ul className="hidden items-center gap-6 lg:flex xl:gap-8">
+        <ul className="hidden flex-wrap items-center gap-4 lg:flex xl:gap-6">
           {navItems.map((item) => (
-            <li key={item.href} className="flex items-center gap-2">
+            <li key={item.href} className="flex items-center">
               <Link href={item.href} className={linkClass(item.href)}>
                 {item.label}
               </Link>
-              {item.live ? (
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-next-primary/60 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-next-primary shadow-[0_0_12px_2px_rgba(255,0,85,0.85)]" />
-                </span>
-              ) : null}
             </li>
           ))}
         </ul>
 
+        <div className="hidden items-center gap-4 lg:flex">
+          <motion.div
+            animate={{
+              boxShadow: [
+                "0 0 0 0 rgba(255,0,85,0.35)",
+                "0 0 22px 4px rgba(255,0,85,0.55)",
+                "0 0 0 0 rgba(255,0,85,0.35)",
+              ],
+            }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            className="rounded-full"
+          >
+            <Link
+              href="/vote"
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-next-primary px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-next-primary/90"
+            >
+              Vote
+            </Link>
+          </motion.div>
+        </div>
+
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-lg border border-next-border bg-next-card text-next-text lg:hidden"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-next-border bg-next-card text-next-text lg:hidden"
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
@@ -129,34 +151,49 @@ export function Navbar() {
               transition={{ type: "tween", duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               className="fixed inset-y-0 right-0 z-[95] flex w-[min(100%,20rem)] flex-col border-l border-next-border bg-next-background shadow-2xl lg:hidden"
             >
-              <div className="flex items-center justify-between border-b border-next-border px-4 py-4">
+              <div className="flex min-h-14 items-center justify-between border-b border-next-border px-4 py-3">
                 <span className="font-display text-2xl text-next-text">Menu</span>
                 <button
                   type="button"
-                  className="rounded-lg border border-next-border px-3 py-1.5 text-sm text-next-text-secondary"
+                  className="min-h-11 rounded-lg border border-next-border px-4 text-sm text-next-text-secondary"
                   onClick={() => setOpen(false)}
                 >
                   Close
                 </button>
               </div>
-              <ul className="flex flex-1 flex-col overflow-y-auto py-4">
+              <ul className="flex flex-1 flex-col overflow-y-auto overscroll-contain py-4">
                 {navItems.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={`${linkClass(item.href, true)} flex items-center gap-2`}
+                      className={linkClass(item.href, true)}
                       onClick={() => setOpen(false)}
                     >
-                      <span>{item.label}</span>
-                      {item.live ? (
-                        <span className="relative flex h-2 w-2">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-next-primary/50 opacity-75" />
-                          <span className="relative inline-flex h-2 w-2 rounded-full bg-next-primary shadow-[0_0_10px_2px_rgba(255,0,85,0.8)]" />
-                        </span>
-                      ) : null}
+                      {item.label}
                     </Link>
                   </li>
                 ))}
+                <li className="mt-4 px-4">
+                  <motion.div
+                    animate={{
+                      boxShadow: [
+                        "0 0 0 0 rgba(255,0,85,0.35)",
+                        "0 0 20px 3px rgba(255,0,85,0.5)",
+                        "0 0 0 0 rgba(255,0,85,0.35)",
+                      ],
+                    }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                    className="rounded-full"
+                  >
+                    <Link
+                      href="/vote"
+                      className="flex min-h-12 w-full items-center justify-center rounded-full bg-next-primary py-3 text-center text-base font-semibold text-white"
+                      onClick={() => setOpen(false)}
+                    >
+                      Vote
+                    </Link>
+                  </motion.div>
+                </li>
               </ul>
             </motion.div>
           </>

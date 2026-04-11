@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type ArtistCardProps = {
   name: string;
@@ -7,20 +8,26 @@ type ArtistCardProps = {
   href?: string;
 };
 
-export function ArtistCard({ name, tagline, imageSrc, href = "#" }: ArtistCardProps) {
+export function ArtistCard({
+  name,
+  tagline,
+  imageSrc,
+  href = "/vote",
+}: ArtistCardProps) {
   return (
-    <a
+    <Link
       href={href}
-      className="group block overflow-hidden rounded-2xl border border-next-border bg-next-card ring-1 ring-white/5 transition-transform duration-300 hover:-translate-y-1 hover:border-next-primary/30 hover:ring-next-primary/20"
+      className="group block min-h-[44px] overflow-hidden rounded-2xl border border-next-border bg-next-card ring-1 ring-white/5 transition-transform duration-300 hover:-translate-y-1 hover:border-next-primary/30 hover:ring-next-primary/20"
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-next-background">
+      <div className="relative aspect-[4/5] w-full max-w-full overflow-hidden bg-next-background">
         {imageSrc ? (
           <Image
             src={imageSrc}
-            alt=""
+            alt={`Portrait of ${name}, NEXT artist`}
             fill
+            loading="lazy"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 33vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-next-primary/20 via-next-background to-next-secondary/15">
@@ -35,6 +42,6 @@ export function ArtistCard({ name, tagline, imageSrc, href = "#" }: ArtistCardPr
           <p className="mt-1 text-sm text-next-secondary">{tagline}</p>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

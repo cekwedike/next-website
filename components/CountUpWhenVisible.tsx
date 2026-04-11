@@ -40,7 +40,7 @@ export function CountUpWhenVisible({
         {value}
         {suffix}
       </p>
-      <p className="mt-2 text-xs font-medium uppercase tracking-wider text-next-text sm:text-sm">
+      <p className="mt-2 text-sm font-medium uppercase tracking-wider text-next-text">
         {label}
       </p>
     </div>

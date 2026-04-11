@@ -73,7 +73,7 @@ function Column({
           <li key={l.href}>
             <Link
               href={l.href}
-              className="text-sm text-next-text-secondary transition-colors hover:text-next-secondary"
+              className="inline-flex min-h-11 items-center text-sm text-next-text-secondary transition-colors hover:text-next-secondary"
             >
               {l.label}
             </Link>
