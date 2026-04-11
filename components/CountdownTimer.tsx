@@ -5,13 +5,19 @@ import { useEffect, useMemo, useState } from "react";
 type CountdownTimerProps = {
   targetDate: string;
   className?: string;
+  /** Use on teal / bright backgrounds (e.g. voting banner). */
+  variant?: "default" | "onTeal";
 };
 
 function pad(n: number) {
   return n.toString().padStart(2, "0");
 }
 
-export function CountdownTimer({ targetDate, className = "" }: CountdownTimerProps) {
+export function CountdownTimer({
+  targetDate,
+  className = "",
+  variant = "default",
+}: CountdownTimerProps) {
   const end = useMemo(() => new Date(targetDate).getTime(), [targetDate]);
   const [now, setNow] = useState(() => Date.now());
 
@@ -33,6 +39,19 @@ export function CountdownTimer({ targetDate, className = "" }: CountdownTimerPro
     { label: "Seconds", value: pad(seconds) },
   ];
 
+  const cell =
+    variant === "onTeal"
+      ? "rounded-xl border border-next-background/20 bg-next-background/15 px-3 py-4 text-center sm:px-4 backdrop-blur-sm"
+      : "rounded-xl border border-next-border bg-next-card px-3 py-4 text-center sm:px-4";
+  const valueClass =
+    variant === "onTeal"
+      ? "font-display text-3xl font-bold tracking-widest text-next-background sm:text-4xl"
+      : "font-display text-3xl font-bold tracking-widest text-next-primary sm:text-4xl";
+  const labelClass =
+    variant === "onTeal"
+      ? "mt-1 text-xs font-bold uppercase tracking-wider text-next-background/85"
+      : "mt-1 text-xs font-bold uppercase tracking-wider text-next-text-secondary";
+
   return (
     <div
       className={`grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 ${className}`}
@@ -40,16 +59,9 @@ export function CountdownTimer({ targetDate, className = "" }: CountdownTimerPro
       aria-live="polite"
     >
       {units.map((u) => (
-        <div
-          key={u.label}
-          className="rounded-xl border border-next-border bg-next-card px-3 py-4 text-center sm:px-4"
-        >
-          <div className="font-display text-3xl tracking-widest text-next-primary sm:text-4xl">
-            {u.value}
-          </div>
-          <div className="mt-1 text-xs font-medium uppercase tracking-wider text-next-text-secondary">
-            {u.label}
-          </div>
+        <div key={u.label} className={cell}>
+          <div className={valueClass}>{u.value}</div>
+          <div className={labelClass}>{u.label}</div>
         </div>
       ))}
     </div>

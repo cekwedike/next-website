@@ -1,0 +1,17 @@
+{
+  "name": "NEXT by Energize Music",
+  "short_name": "NEXT",
+  "description": "Africa's boldest Afrogospel talent competition and music incubator by Energize Music.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#FF0055",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

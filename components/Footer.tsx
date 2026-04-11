@@ -134,7 +134,7 @@ export function Footer() {
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-next-text-secondary">
-            © 2025 NEXT by Energize Music. All rights reserved.
+            © 2026 NEXT by Energize Music. All rights reserved.
           </p>
           <p className="text-xs text-next-text-secondary/80">
             Afrogospel · Talent · Incubator

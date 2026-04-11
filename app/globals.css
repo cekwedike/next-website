@@ -47,3 +47,46 @@ body {
 *::-webkit-scrollbar-thumb:hover {
   background: #ff3377;
 }
+
+@keyframes hero-scroll-nudge {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateX(-50%) translateY(10px);
+    opacity: 1;
+  }
+}
+
+.animate-hero-scroll {
+  animation: hero-scroll-nudge 2.4s ease-in-out infinite;
+}
+
+/* 10 rpm vinyl rotation → 6s per revolution */
+@keyframes vinyl-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-vinyl-10rpm {
+  animation: vinyl-spin 6s linear infinite;
+}
+
+@keyframes vinyl-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-vinyl-spin {
+  animation: vinyl-spin 28s linear infinite;
+}
