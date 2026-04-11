@@ -20,6 +20,7 @@ export function buildPageMetadata({
       canonical: path,
     },
     openGraph: {
+      type: "website",
       title,
       description,
       url,
@@ -27,6 +28,8 @@ export function buildPageMetadata({
     },
     twitter: {
       card: "summary_large_image",
+      site: "@EnergizeMusic",
+      creator: "@EnergizeMusic",
       title,
       description,
       images: [ogImageUrl],

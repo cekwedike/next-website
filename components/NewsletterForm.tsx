@@ -30,7 +30,7 @@ export function NewsletterForm() {
         placeholder="Enter your email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="min-h-12 flex-1 rounded-full border border-white/25 bg-black/25 px-5 text-next-text placeholder:text-white/50 outline-none ring-next-secondary/40 transition focus:border-next-secondary focus:ring-2"
+        className="min-h-12 flex-1 rounded-full border border-white/25 bg-black/25 px-5 text-base text-next-text placeholder:text-white/50 outline-none ring-next-secondary/40 transition focus:border-next-secondary focus:ring-2"
       />
       <button
         type="submit"

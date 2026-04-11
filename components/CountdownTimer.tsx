@@ -49,8 +49,8 @@ export function CountdownTimer({
       : "font-display text-3xl font-bold tracking-widest text-next-primary sm:text-4xl";
   const labelClass =
     variant === "onTeal"
-      ? "mt-1 text-xs font-bold uppercase tracking-wider text-next-background/85"
-      : "mt-1 text-xs font-bold uppercase tracking-wider text-next-text-secondary";
+      ? "mt-1 text-sm font-bold uppercase tracking-wider text-next-background/85"
+      : "mt-1 text-sm font-bold uppercase tracking-wider text-next-text-secondary";
 
   return (
     <div

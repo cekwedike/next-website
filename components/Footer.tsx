@@ -98,7 +98,7 @@ export function Footer() {
               <span className="font-display text-4xl leading-none tracking-wide text-next-text">
                 NEXT
               </span>
-              <span className="mt-1 block text-xs font-medium tracking-widest text-next-secondary">
+              <span className="mt-1 block text-sm font-medium tracking-widest text-next-secondary">
                 by Energize Music
               </span>
             </Link>
@@ -122,7 +122,7 @@ export function Footer() {
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-next-border bg-next-card text-next-text-secondary transition-colors hover:border-next-secondary hover:text-next-secondary"
+                    className="flex h-11 w-11 items-center justify-center rounded-lg border border-next-border bg-next-card text-next-text-secondary transition-colors hover:border-next-secondary hover:text-next-secondary"
                     aria-label={s.name}
                   >
                     {s.icon}
@@ -136,7 +136,7 @@ export function Footer() {
           <p className="text-sm text-next-text-secondary">
             © 2026 NEXT by Energize Music. All rights reserved.
           </p>
-          <p className="text-xs text-next-text-secondary/80">
+          <p className="text-sm text-next-text-secondary/80">
             Afrogospel · Talent · Incubator
           </p>
         </div>

@@ -43,13 +43,13 @@ export function Navbar() {
   const linkClass = (href: string, mobile = false) => {
     const active = isActive(pathname, href);
     const base =
-      "relative text-sm font-medium tracking-wide transition-colors hover:text-next-text min-h-11 inline-flex items-center";
-    const desktop = active ? "text-next-text" : "text-next-text-secondary";
-    const mobileBase = `block border-l-4 py-3 pl-4 pr-6 ${base}`;
+      "relative text-sm font-medium tracking-wide transition-colors hover:text-next-text";
+    const desktop = `${active ? "text-next-text" : "text-next-text-secondary"} inline-flex items-center py-2.5`;
+    const mobileBase = `flex min-h-12 items-center border-l-4 py-3 pl-4 pr-6 ${base}`;
     const mobileActive = active
       ? "border-next-primary bg-next-card text-next-text"
       : "border-transparent text-next-text-secondary";
-    return mobile ? `${mobileBase} ${mobileActive}` : `${desktop} ${base}`;
+    return mobile ? `${mobileBase} ${mobileActive}` : `${desktop}`;
   };
 
   return (
