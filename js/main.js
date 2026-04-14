@@ -23,6 +23,112 @@ lucide.createIcons();
   }, 6000);
 }());
 
+// ─── SCROLL PROGRESS BAR ───
+(function () {
+  var bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  var ticking = false;
+  function update() {
+    var doc = document.documentElement;
+    var scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight) || 0;
+    bar.style.transform = 'scaleX(' + scrolled + ')';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+}());
+
+// ─── STICKY NAV ───
+(function () {
+  var nav  = document.getElementById('sticky-nav');
+  var hero = document.getElementById('hero');
+  if (!nav || !hero) return;
+  var observer = new IntersectionObserver(function (entries) {
+    nav.classList.toggle('visible', !entries[0].isIntersecting);
+  }, { threshold: 0 });
+  observer.observe(hero);
+}());
+
+// ─── 3D CARD TILT ───
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if ('ontouchstart' in window) return; // skip on touch devices
+
+  document.querySelectorAll('.glass-card').forEach(function (card) {
+    card.addEventListener('mousemove', function (e) {
+      var rect = card.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width  - 0.5;
+      var y = (e.clientY - rect.top)  / rect.height - 0.5;
+      card.style.transition = 'transform 0.08s ease, border-color 0.25s ease, box-shadow 0.25s ease';
+      card.style.transform = 'perspective(900px) rotateY(' + (x * 9) + 'deg) rotateX(' + (-y * 9) + 'deg) translateZ(6px)';
+    });
+    card.addEventListener('mouseleave', function () {
+      card.style.transition = 'transform 0.55s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.25s ease, box-shadow 0.25s ease';
+      card.style.transform = '';
+    });
+  });
+}());
+
+// ─── COUNT-UP ANIMATION ───
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  document.querySelectorAll('.mission-stat-number').forEach(function (el) {
+    var target = parseFloat(el.textContent.replace(/,/g, ''));
+    if (isNaN(target)) return;
+    var original = el.textContent;
+    var started  = false;
+    var observer = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting || started) return;
+      started = true;
+      observer.disconnect();
+      var start    = null;
+      var duration = 1400;
+      function step(ts) {
+        if (!start) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var ease     = 1 - Math.pow(1 - progress, 3);
+        var value    = Math.round(ease * target);
+        el.textContent = value;
+        if (progress < 1) window.requestAnimationFrame(step);
+        else el.textContent = original;
+      }
+      window.requestAnimationFrame(step);
+    }, { threshold: 0.6 });
+    observer.observe(el);
+  });
+}());
+
+// ─── HERO PARALLAX ───
+(function () {
+  // Respect reduced-motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var hero     = document.getElementById('hero');
+  var carousel = document.getElementById('hero-bg-carousel');
+  if (!hero || !carousel) return;
+
+  var ticking = false;
+
+  function update() {
+    var scrollY    = window.pageYOffset;
+    var heroBottom = hero.offsetTop + hero.offsetHeight;
+
+    // Only move while hero is on screen
+    if (scrollY < heroBottom) {
+      carousel.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+}());
+
 // ─── SCROLL ANIMATIONS ───
 (function () {
   if (!('IntersectionObserver' in window)) return;

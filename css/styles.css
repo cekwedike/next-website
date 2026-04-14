@@ -28,6 +28,101 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ─── SCROLL PROGRESS BAR ─── */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent-yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: 9999;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ─── STICKY NAV ─── */
+#sticky-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  transform: translateY(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#sticky-nav.visible {
+  transform: translateY(0);
+}
+
+.sticky-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.sticky-nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.sticky-nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.sticky-nav-links a {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s ease;
+}
+
+.sticky-nav-links a:hover {
+  color: var(--accent-yellow);
+}
+
+.sticky-nav-cta {
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+  background: var(--accent-yellow);
+  padding: 8px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.sticky-nav-cta:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .sticky-nav-links {
+    display: none;
+  }
+  .sticky-nav-inner {
+    padding: 0 20px;
+  }
+}
+
 /* ─── SCROLL ANIMATIONS ─── */
 [data-animate] {
   opacity: 0;
@@ -136,11 +231,12 @@ section {
 /* ─── HERO CAROUSEL ─── */
 #hero-bg-carousel {
   position: absolute;
-  top: 0;
+  top: -20%;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 140%;
   z-index: 0;
+  will-change: transform;
 }
 
 .carousel-slide {
