@@ -155,6 +155,16 @@ body {
   box-shadow: 0 0 32px rgba(245, 166, 35, 0.08);
 }
 
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 24px rgba(245, 166, 35, 0.18), 0 0 48px rgba(245, 166, 35, 0.07); }
+  50%       { box-shadow: 0 0 48px rgba(245, 166, 35, 0.40), 0 0 90px rgba(245, 166, 35, 0.16); }
+}
+
+.artists-card:hover {
+  border-color: rgba(245, 166, 35, 0.55);
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
 /* ─── BUTTONS ─── */
 .btn {
   display: inline-flex;

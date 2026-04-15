@@ -56,6 +56,7 @@ lucide.createIcons();
   if ('ontouchstart' in window) return; // skip on touch devices
 
   document.querySelectorAll('.glass-card').forEach(function (card) {
+    if (card.classList.contains('artists-card')) return;
     card.addEventListener('mousemove', function (e) {
       var rect = card.getBoundingClientRect();
       var x = (e.clientX - rect.left) / rect.width  - 0.5;
