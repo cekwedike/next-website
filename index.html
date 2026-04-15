@@ -33,6 +33,9 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Tally embed -->
+  <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
 </head>
 <body>
 
@@ -283,9 +286,13 @@
             </div>
           </div>
 
-          <a href="#" class="btn btn-yellow">Submit Your Music</a>
+          <a href="#submit-form" class="btn btn-yellow" onclick="document.getElementById('submit-form').scrollIntoView({behavior: 'smooth'})">Submit Your Music</a>
         </div>
       </div>
+    </div>
+
+    <div id="submit-form" style="width:100%;max-width:720px;margin:48px auto 0 auto;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+      <iframe data-tally-src="https://tally.so/embed/ob7Px1?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&formEventsForwarding=1" loading="lazy" width="100%" height="1039" frameborder="0" marginheight="0" marginwidth="0" title="NEXT: New Era Xceptional Talent"></iframe>
     </div>
   </section>
 
