@@ -28,8 +28,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <!-- Preload first hero image (LCP) -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80" fetchpriority="high" />
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css" />
@@ -60,9 +60,9 @@
   <section id="hero">
     <div id="hero-bg-carousel" aria-hidden="true">
       <div class="carousel-slide" style="background-image:url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80')"></div>
-      <div class="carousel-slide" style="background-image:url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1920&q=80')"></div>
-      <div class="carousel-slide" style="background-image:url('https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=1920&q=80')"></div>
-      <div class="carousel-slide" style="background-image:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1920&q=80')"></div>
+      <div class="carousel-slide" data-bg="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1920&q=80"></div>
+      <div class="carousel-slide" data-bg="https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=1920&q=80"></div>
+      <div class="carousel-slide" data-bg="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1920&q=80"></div>
       <div class="carousel-overlay"></div>
     </div>
 
@@ -394,6 +394,7 @@
     </div>
   </footer>
 
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -3,23 +3,37 @@ lucide.createIcons();
 
 // ─── HERO BACKGROUND CAROUSEL ───
 (function () {
-  var urls = [
-    'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80',
-    'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1920&q=80',
-    'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=1920&q=80',
-    'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1920&q=80'
-  ];
-
-  urls.forEach(function (url) { var img = new Image(); img.src = url; });
-
   var slides = document.querySelectorAll('#hero-bg-carousel .carousel-slide');
   if (!slides.length) return;
+
+  // Set background-image from data-bg if not already inline
+  function loadSlide(slide) {
+    if (!slide.style.backgroundImage && slide.dataset.bg) {
+      slide.style.backgroundImage = "url('" + slide.dataset.bg + "')";
+    }
+  }
+
+  // Silently fetch an image into browser cache
+  function preloadSlide(slide) {
+    if (slide && slide.dataset.bg && !slide.dataset.preloaded) {
+      slide.dataset.preloaded = '1';
+      var img = new Image();
+      img.src = slide.dataset.bg;
+    }
+  }
+
   var current = 0;
   slides[current].classList.add('active');
+
+  // Preload slide 1 after 2 s — well ahead of its 6 s debut
+  setTimeout(function () { preloadSlide(slides[1]); }, 2000);
+
   setInterval(function () {
     slides[current].classList.remove('active');
     current = (current + 1) % slides.length;
+    loadSlide(slides[current]);          // paint background before fade-in
     slides[current].classList.add('active');
+    preloadSlide(slides[(current + 1) % slides.length]); // queue next
   }, 6000);
 }());
 
