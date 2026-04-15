@@ -3,13 +3,15 @@
 
 Africa's first pan-African Afrogospel talent competition and music incubator.
 
+**Live site:** https://next-afrogospel.vercel.app/
+
 ---
 
 ## About the Project
 
 NEXT is a six-phase Afrogospel talent competition that runs from May to October 2026. Artists from across Africa submit video renditions of themselves performing. Fans vote. The top talent gets showcased, mentored, recorded, and launched through the ENERGIZE Afrogospel Album and a major launch concert.
 
-This website is a single-page landing site hosted on the Energize Music domain. It serves as the public face of the competition before, during, and after the submission window.
+This website is a single-page landing site deployed on Vercel at https://next-afrogospel.vercel.app/. It serves as the public face of the competition before, during, and after the submission window.
 
 ---
 
@@ -19,11 +21,9 @@ This website is a single-page landing site hosted on the Energize Music domain. 
 /
 ├── index.html          Main HTML structure and content
 ├── css/
-│   ├── styles.css      Base styles, reset, typography, variables, navbar
-│   ├── sections.css    Section-specific styles and hero animations
-│   └── components.css  Cards, buttons, forms, icons, and footer
+│   └── styles.css      All styles — reset, typography, variables, layout, components
 ├── js/
-│   └── main.js         Lucide icon init, hero carousel, form handler
+│   └── main.js         Lucide icon init, hero carousel, scroll effects, form handler
 └── README.md           This file
 ```
 
@@ -34,7 +34,7 @@ This website is a single-page landing site hosted on the Energize Music domain. 
 Pure HTML, CSS, and vanilla JavaScript. No frameworks. No build tools. No dependencies to install.
 
 External resources loaded via CDN only:
-- Space Grotesk and Bebas Neue via Google Fonts
+- Space Grotesk and Playfair Display via Google Fonts
 - Lucide Icons via CDN for all iconography
 - Unsplash for all stock photography
 
@@ -70,9 +70,9 @@ External resources loaded via CDN only:
 
 | Platform | Handle | URL |
 |---|---|---|
-| Instagram | @energize_music | https://www.instagram.com/energize_music |
-| YouTube | @energize_music | https://www.youtube.com/@energize_music |
-| X (Twitter) | @energize_music | https://twitter.com/energize_music |
+| Instagram | @energizecentral | https://www.instagram.com/energizecentral/ |
+| YouTube | @Energize_HQ | https://www.youtube.com/@Energize_HQ |
+| X (Twitter) | @energizecentral | https://x.com/energizecentral |
 
 ---
 
@@ -81,52 +81,57 @@ External resources loaded via CDN only:
 | Phase | Title | Period |
 |---|---|---|
 | 01 | Launch and Submissions | May 4 to May 31, 2026 |
-| 02 | Top 50 Social Showcase | June 1 to June 21, 2026 |
-| 03 | Public Voting | June 22 to July 13, 2026 |
+| 02 | Social Showcase | June 1 to June 21, 2026 |
+| 03 | Public Voting | June 1 to July 13, 2026 |
 | 04 | Album Creation | July to August 2026 |
 | 05 | Pan-African Block Parties | September 2026 |
 | 06 | Album Launch Concert | October 2026 |
 
 ---
 
-## Submission System (To Be Set Up)
+## Submission System
 
-The artist submission system has not been built yet. The plan is to use **Tally** for the submission form and **Airtable** as the review database. This setup requires no custom backend and can be live within a few hours.
+The artist submission system is live. It uses **Tally** for the submission form and **Airtable** as the backend database. No custom server required.
+
+**Submission form:** https://tally.so/r/ob7Px1
+
+All submission CTAs on the site link directly to this form, which opens in a new tab.
 
 ### What Tally Handles
 - Artist name, stage name, country, email, phone, bio
-- Video rendition link (required) - this is what gets showcased on social media during Phase 2
+- Video rendition link (required) — this is what gets showcased on social media during Phase 2
 - Original song link (optional)
 - Form validation and confirmation emails to artists on submission
 
 ### What Airtable Handles
-- Receives every submission automatically
+- Receives every submission automatically from Tally
 - Allows the team to filter submissions by country
 - Allows judges to review, score, and leave notes on each entry
-- Tracks total submission count toward the 1,000 cap
-- Flags when the cap is approaching so the portal can be closed
+- Tracks total submission count
 
 ### Connection
-Tally and Airtable connect via a free Zapier or Make automation. Every time a form is submitted on Tally, a new row is created in Airtable automatically with all the artist's details.
-
-### Steps to Set Up (When Ready)
-1. Create a free Tally account at tally.so
-2. Build the submission form with all required fields
-3. Create a free Airtable account at airtable.com
-4. Set up a new base called "NEXT Submissions" with columns matching the form fields
-5. Connect Tally to Airtable using Zapier or Make
-6. Test with five dummy submissions to confirm data flows correctly
-7. Embed the Tally form into the For Artists section of index.html using the Tally embed code
-8. Replace the current static CTA buttons with the live embedded form or link to it
+Tally and Airtable are connected via automation. Every form submission creates a new row in Airtable with all the artist's details.
 
 ### Target Countries for Internal Tracking
 Nigeria, Ghana, Kenya, Uganda, South Africa. Airtable filters allow the team to see submission counts per country without this being visible to the public.
 
 ---
 
+## Email Subscription
+
+The Stay Connected section uses **Formspree** for the email subscription form.
+
+**Formspree endpoint:** https://formspree.io/f/mdayknvl
+
+Submissions are handled via a `fetch` POST with JSON. On success the button confirms subscription; on failure it prompts the user to try again. No page reload occurs.
+
+---
+
 ## Deployment
 
-The site is a static single-page build. No server required. Drop the files into the Energize Music hosting environment and point the subdirectory or subdomain to index.html.
+The site is deployed on **Vercel** at https://next-afrogospel.vercel.app/
+
+It is a static single-page build with no server, build step, or dependencies to install. Any changes pushed to the connected repository will redeploy automatically via Vercel's Git integration.
 
 ---
 
