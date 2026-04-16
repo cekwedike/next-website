@@ -309,8 +309,12 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     if (nameEl) nameEl.textContent = track.name;
   }
 
-  // Hide player if audio fails (e.g. files missing)
-  audio.addEventListener('error', function () { player.style.display = 'none'; }, { once: true });
+  // On audio error: reset so the user can tap again — don't hide the player
+  audio.addEventListener('error', function () {
+    trackLoaded = false;
+    btn.setAttribute('aria-pressed', 'false');
+    btn.setAttribute('aria-label', 'Play background music');
+  });
 
   // Show tooltip after player settles (~7.5s), auto-dismiss after 6s
   var tooltipTimer = setTimeout(function () {
@@ -330,12 +334,27 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         pickRandomTrack();
         trackLoaded = true;
       }
-      audio.play().then(function () {
+      // audio.play() returns a Promise in modern browsers,
+      // undefined in legacy ones — guard both paths
+      var playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(function () {
+          btn.setAttribute('aria-pressed', 'true');
+          btn.setAttribute('aria-label', 'Pause background music');
+          info.setAttribute('aria-hidden', 'false');
+          info.classList.add('visible');
+        }).catch(function (err) {
+          // Play was prevented (policy, network, etc.) — reset so user can retry
+          console.warn('Music play failed:', err);
+          trackLoaded = false;
+        });
+      } else {
+        // Legacy browser — assume play started
         btn.setAttribute('aria-pressed', 'true');
         btn.setAttribute('aria-label', 'Pause background music');
         info.setAttribute('aria-hidden', 'false');
         info.classList.add('visible');
-      }).catch(function () {});
+      }
     } else {
       audio.pause();
       btn.setAttribute('aria-pressed', 'false');

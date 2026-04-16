@@ -1361,6 +1361,23 @@ footer {
   }
 }
 
+/* Mobile variant: element is right/bottom anchored so translations are inverted */
+@keyframes musicPlayerIntroMobile {
+  0% {
+    transform: translateX(calc(-50vw + var(--mp-right) + 50%)) translateY(calc(-50vh + var(--mp-bottom) + 50%)) scale(3);
+    opacity: 0;
+  }
+  12% { opacity: 1; }
+  58% {
+    transform: translateX(calc(-50vw + var(--mp-right) + 50%)) translateY(calc(-50vh + var(--mp-bottom) + 50%)) scale(3);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes musicIntroBg {
   0%   { opacity: 0; }
   12%  { opacity: 1; }
@@ -1378,17 +1395,14 @@ footer {
 }
 
 @media (max-width: 768px) {
-  /* Skip the dramatic fly-in on mobile — just fade in at the bottom */
-  #music-intro-bg {
-    animation: none;
-  }
   #music-player {
     top: auto;
     bottom: 20px;
     left: auto;
     right: 16px;
     flex-direction: row-reverse; /* info strip expands leftward */
-    animation: fadeIn 0.5s ease 4.5s both;
+    --mp-right: 16px;
+    --mp-bottom: 20px;
   }
   /* Tooltip appears ABOVE the button on mobile (it sits at the bottom) */
   #music-tooltip {
@@ -1418,5 +1432,15 @@ footer {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+/* Mobile with motion enabled: use the bottom-right origin keyframe */
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  #music-intro-bg {
+    animation: musicIntroBg 2.6s ease 4.5s both;
+  }
+  #music-player {
+    animation: musicPlayerIntroMobile 2.6s cubic-bezier(0.34, 1.56, 0.64, 1) 4.5s both;
   }
 }
