@@ -1,3 +1,20 @@
+// ─── PRELOADER ───
+(function () {
+  var preloader = document.getElementById('preloader');
+  if (!preloader) return;
+  function dismiss() {
+    preloader.classList.add('done');
+    preloader.addEventListener('transitionend', function () {
+      preloader.style.display = 'none';
+    }, { once: true });
+  }
+  if (document.readyState === 'complete') {
+    setTimeout(dismiss, 700);
+  } else {
+    window.addEventListener('load', function () { setTimeout(dismiss, 700); });
+  }
+}());
+
 // Initialize Lucide icons
 lucide.createIcons();
 

@@ -4,6 +4,41 @@
   padding: 0;
 }
 
+/* ─── PRELOADER ─── */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: #0A0A0A;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+}
+#preloader.done {
+  opacity: 0;
+  pointer-events: none;
+}
+.preloader-line {
+  width: 120px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.preloader-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #F5A623;
+  transform: translateX(-100%);
+  animation: preloaderFill 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+}
+@keyframes preloaderFill {
+  to { transform: translateX(0); }
+}
+
 :root {
   --bg-primary: #0A0A0A;
   --bg-secondary: #111111;
@@ -349,45 +384,45 @@ section {
     transform-box: fill-box;
     transform-origin: center center;
     animation:
-      xGoldBurst 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0s both,
-      svgGlowPulse 2.5s ease-in-out 1.8s infinite;
+      xGoldBurst 1.0s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s both,
+      svgGlowPulse 2.5s ease-in-out 3.7s infinite;
   }
 
   /* N diagonal stroke — sweeps in from the left */
   #logo-n-diag {
-    animation: logoSlideLeft 0.5s ease-out 0.35s both;
+    animation: logoSlideLeft 0.65s ease-out 1.7s both;
   }
 
   /* N horizontal bars — slides in from left, slightly later */
   #logo-n-bars {
-    animation: logoSlideLeft 0.5s ease-out 0.5s both;
+    animation: logoSlideLeft 0.65s ease-out 1.9s both;
   }
 
   /* X white wedges — scale up from their center after gold X lands */
   #logo-x-white {
     transform-box: fill-box;
     transform-origin: center center;
-    animation: xWhiteReveal 0.45s ease-out 0.65s both;
+    animation: xWhiteReveal 0.6s ease-out 2.1s both;
   }
 
   /* T — drops in from above with a slight bounce */
   #logo-t {
     transform-box: fill-box;
     transform-origin: center top;
-    animation: tDropIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.85s both;
+    animation: tDropIn 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) 2.35s both;
   }
 
   /* Separator line — draws downward */
   #logo-sep {
     transform-box: fill-box;
     transform-origin: center top;
-    animation: lineDraw 0.4s ease-out 1.05s both;
+    animation: lineDraw 0.55s ease-out 2.6s both;
   }
 
   /* Text lines — stagger in from the right */
-  #logo-text-1 { animation: textSlideIn 0.4s ease-out 1.15s both; }
-  #logo-text-2 { animation: textSlideIn 0.4s ease-out 1.35s both; }
-  #logo-text-3 { animation: textSlideIn 0.4s ease-out 1.55s both; }
+  #logo-text-1 { animation: textSlideIn 0.55s ease-out 2.8s both; }
+  #logo-text-2 { animation: textSlideIn 0.55s ease-out 3.05s both; }
+  #logo-text-3 { animation: textSlideIn 0.55s ease-out 3.3s both; }
 }
 
 @keyframes xGoldBurst {
