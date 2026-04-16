@@ -280,3 +280,69 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     }
   });
 });
+
+// ─── FLOATING MUSIC PLAYER ───
+(function () {
+  var tracks = [
+    { src: 'public/music/all-the-praise.mp3', name: 'Greatman Takit - All The Praise' },
+    { src: 'public/music/tinbake.mp3',        name: 'Limoblaze - Tinbake'        }
+  ];
+
+  var player  = document.getElementById('music-player');
+  var btn     = document.getElementById('music-btn');
+  var audio   = document.getElementById('music-audio');
+  var tooltip = document.getElementById('music-tooltip');
+  var info    = document.getElementById('music-info');
+  var bar     = document.getElementById('music-progress-bar');
+  var nameEl  = document.getElementById('music-track-name');
+  if (!player || !btn || !audio) return;
+
+  var trackLoaded = false;
+
+  function pickRandomTrack() {
+    var track = tracks[Math.floor(Math.random() * tracks.length)];
+    audio.src = track.src;
+    if (nameEl) nameEl.textContent = track.name;
+  }
+
+  // Hide player if audio fails (e.g. files missing)
+  audio.addEventListener('error', function () { player.style.display = 'none'; }, { once: true });
+
+  // Show tooltip after player settles (~9s), auto-dismiss after 6s
+  var tooltipTimer = setTimeout(function () {
+    tooltip.classList.add('visible');
+    setTimeout(function () { tooltip.classList.remove('visible'); }, 6000);
+  }, 9000);
+
+  function dismissTooltip() {
+    clearTimeout(tooltipTimer);
+    tooltip.classList.remove('visible');
+  }
+
+  btn.addEventListener('click', function () {
+    dismissTooltip();
+    if (audio.paused) {
+      if (!trackLoaded) {
+        pickRandomTrack();
+        trackLoaded = true;
+      }
+      audio.play().then(function () {
+        btn.setAttribute('aria-pressed', 'true');
+        btn.setAttribute('aria-label', 'Pause background music');
+        info.setAttribute('aria-hidden', 'false');
+        info.classList.add('visible');
+      }).catch(function () {});
+    } else {
+      audio.pause();
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-label', 'Play background music');
+    }
+  });
+
+  // Update progress bar as track plays
+  audio.addEventListener('timeupdate', function () {
+    if (audio.duration) {
+      bar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    }
+  });
+}());

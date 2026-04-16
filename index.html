@@ -29,7 +29,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Preload first hero image (LCP) -->
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80" fetchpriority="high" />
+  <link rel="preload" as="image" href="public/takit.webp" fetchpriority="high" />
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css" />
@@ -65,10 +65,11 @@
   ═══════════════════════════════════════ -->
   <section id="hero">
     <div id="hero-bg-carousel" aria-hidden="true">
-      <div class="carousel-slide" style="background-image:url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80')"></div>
-      <div class="carousel-slide" data-bg="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1920&q=80"></div>
-      <div class="carousel-slide" data-bg="https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=1920&q=80"></div>
-      <div class="carousel-slide" data-bg="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1920&q=80"></div>
+      <div class="carousel-slide" style="background-image:url('public/takit.webp')"></div>
+      <div class="carousel-slide" data-bg="public/aeo.webp"></div>
+      <div class="carousel-slide" data-bg="public/gaise.webp"></div>
+      <div class="carousel-slide" data-bg="public/korale-2.webp"></div>
+      <div class="carousel-slide" data-bg="public/greatman.webp"></div>
       <div class="carousel-overlay"></div>
     </div>
 
@@ -280,8 +281,8 @@
       <!-- Image -->
       <div class="artists-image">
         <img
-          src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=900&q=85&auto=format&fit=crop"
-          alt="African musician performing on stage"
+          src="public/korale.jpg"
+          alt="Afrogospel artist performing on stage"
           loading="lazy"
         />
         <div class="artists-image-overlay"></div>
@@ -451,6 +452,30 @@
       </div>
     </div>
   </footer>
+
+  <!-- Music player screen intro backdrop -->
+  <div id="music-intro-bg" aria-hidden="true"></div>
+
+  <!-- Floating Music Player -->
+  <div id="music-player" aria-label="Music player" role="region">
+    <div id="music-tooltip" aria-hidden="true">Click to play</div>
+    <button id="music-btn" aria-label="Play background music" aria-pressed="false">
+      <svg id="music-icon-play" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 18V5l12-2v13"/>
+        <circle cx="6" cy="18" r="3"/>
+        <circle cx="18" cy="16" r="3"/>
+      </svg>
+      <svg id="music-icon-pause" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="6" y="4" width="4" height="16"/>
+        <rect x="14" y="4" width="4" height="16"/>
+      </svg>
+    </button>
+    <div id="music-info" aria-hidden="true">
+      <span id="music-track-name">Afrogospel Vibes</span>
+      <div id="music-progress-wrap"><div id="music-progress-bar"></div></div>
+    </div>
+    <audio id="music-audio" preload="none" loop></audio>
+  </div>
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <script src="js/main.js"></script>
