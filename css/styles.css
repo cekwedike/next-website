@@ -72,12 +72,10 @@ body {
   height: 56px;
 }
 
-.sticky-nav-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
+.sticky-nav-logo {
+  height: 22px;
+  width: auto;
+  display: block;
 }
 
 .sticky-nav-links {
@@ -158,6 +156,11 @@ body {
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 0 24px rgba(245, 166, 35, 0.18), 0 0 48px rgba(245, 166, 35, 0.07); }
   50%       { box-shadow: 0 0 48px rgba(245, 166, 35, 0.40), 0 0 90px rgba(245, 166, 35, 0.16); }
+}
+
+@keyframes svgGlowPulse {
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(245, 166, 35, 0.25)); }
+  50%       { filter: drop-shadow(0 0 10px rgba(245, 166, 35, 0.80)); }
 }
 
 .artists-card:hover {
@@ -327,26 +330,95 @@ section {
   background: var(--accent-yellow);
 }
 
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(100px, 18vw, 220px);
-  font-weight: 400;
-  line-height: 0.88;
-  letter-spacing: 4px;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-  --slide-distance: 30px;
-  animation: fadeSlideUp 0.7s ease-out 0.2s both;
+.hero-logo-svg {
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 24px;
 }
 
-.hero-subtitle {
-  font-size: clamp(18px, 2.5vw, 26px);
-  font-weight: 600;
-  color: var(--accent-yellow);
-  margin-bottom: 20px;
-  letter-spacing: 0.02em;
-  --slide-distance: 20px;
-  animation: fadeSlideUp 0.6s ease-out 0.4s both;
+.hero-logo-svg svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Gold X — bursts in first from its own center with amber flash */
+  #logo-x-gold {
+    transform-box: fill-box;
+    transform-origin: center center;
+    animation:
+      xGoldBurst 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0s both,
+      svgGlowPulse 2.5s ease-in-out 1.8s infinite;
+  }
+
+  /* N diagonal stroke — sweeps in from the left */
+  #logo-n-diag {
+    animation: logoSlideLeft 0.5s ease-out 0.35s both;
+  }
+
+  /* N horizontal bars — slides in from left, slightly later */
+  #logo-n-bars {
+    animation: logoSlideLeft 0.5s ease-out 0.5s both;
+  }
+
+  /* X white wedges — scale up from their center after gold X lands */
+  #logo-x-white {
+    transform-box: fill-box;
+    transform-origin: center center;
+    animation: xWhiteReveal 0.45s ease-out 0.65s both;
+  }
+
+  /* T — drops in from above with a slight bounce */
+  #logo-t {
+    transform-box: fill-box;
+    transform-origin: center top;
+    animation: tDropIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.85s both;
+  }
+
+  /* Separator line — draws downward */
+  #logo-sep {
+    transform-box: fill-box;
+    transform-origin: center top;
+    animation: lineDraw 0.4s ease-out 1.05s both;
+  }
+
+  /* Text lines — stagger in from the right */
+  #logo-text-1 { animation: textSlideIn 0.4s ease-out 1.15s both; }
+  #logo-text-2 { animation: textSlideIn 0.4s ease-out 1.35s both; }
+  #logo-text-3 { animation: textSlideIn 0.4s ease-out 1.55s both; }
+}
+
+@keyframes xGoldBurst {
+  0%   { opacity: 0; transform: scale(0.45); filter: drop-shadow(0 0 28px rgba(245,166,35,0.95)); }
+  55%  { opacity: 1; transform: scale(1.07); filter: drop-shadow(0 0 18px rgba(245,166,35,0.7)); }
+  100% { opacity: 1; transform: scale(1);   filter: drop-shadow(0 0 4px rgba(245,166,35,0.3)); }
+}
+
+@keyframes logoSlideLeft {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes xWhiteReveal {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes tDropIn {
+  from { opacity: 0; transform: translateY(-22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lineDraw {
+  from { opacity: 0; transform: scaleY(0); }
+  to   { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes textSlideIn {
+  from { opacity: 0; transform: translateX(22px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 .hero-desc {
@@ -867,12 +939,11 @@ footer {
   justify-content: space-between;
 }
 
-.footer-brand .next-logo {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-  line-height: 1;
+.footer-logo {
+  height: 32px;
+  width: auto;
+  display: block;
+  margin-bottom: 4px;
 }
 
 .footer-brand .by-line {
@@ -969,13 +1040,8 @@ footer {
     letter-spacing: 3px;
   }
 
-  .hero-title {
-    font-size: clamp(80px, 22vw, 120px);
-    letter-spacing: 2px;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(16px, 4vw, 22px);
+  .hero-logo-svg {
+    max-width: 100%;
   }
 
   .hero-desc {
