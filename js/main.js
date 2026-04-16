@@ -307,6 +307,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     var track = tracks[Math.floor(Math.random() * tracks.length)];
     audio.src = track.src;
     if (nameEl) nameEl.textContent = track.name;
+    audio.load(); // tell the browser to start loading — critical for iOS
   }
 
   // On audio error: reset so the user can tap again — don't hide the player
@@ -316,7 +317,17 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     btn.setAttribute('aria-label', 'Play background music');
   });
 
-  // Show tooltip after player settles (~7.5s), auto-dismiss after 6s
+  // Pre-load the random track when the player animation has settled.
+  // iOS requires audio.src to be set BEFORE the user gesture that calls play(),
+  // otherwise it rejects the play() call. Loading early solves this.
+  setTimeout(function () {
+    if (!trackLoaded) {
+      pickRandomTrack();
+      trackLoaded = true;
+    }
+  }, 7500);
+
+  // Show tooltip at the same time (player is settled), auto-dismiss after 6s
   var tooltipTimer = setTimeout(function () {
     tooltip.classList.add('visible');
     setTimeout(function () { tooltip.classList.remove('visible'); }, 6000);
@@ -330,6 +341,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   btn.addEventListener('click', function () {
     dismissTooltip();
     if (audio.paused) {
+      // Fallback: if the pre-load timer hasn't fired yet (very fast tap),
+      // pick a track now. play() still works on desktop in this case.
       if (!trackLoaded) {
         pickRandomTrack();
         trackLoaded = true;
