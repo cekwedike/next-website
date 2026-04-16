@@ -140,13 +140,17 @@ lucide.createIcons();
   var carousel = document.getElementById('hero-bg-carousel');
   if (!hero || !carousel) return;
 
+  var mobile = window.matchMedia('(max-width: 768px)');
   var ticking = false;
 
   function update() {
+    // On mobile the carousel is reset to top:0/height:100% in CSS,
+    // so translateY would push the background out — skip it.
+    if (mobile.matches) { ticking = false; return; }
+
     var scrollY    = window.pageYOffset;
     var heroBottom = hero.offsetTop + hero.offsetHeight;
 
-    // Only move while hero is on screen
     if (scrollY < heroBottom) {
       carousel.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
     }
@@ -308,11 +312,11 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   // Hide player if audio fails (e.g. files missing)
   audio.addEventListener('error', function () { player.style.display = 'none'; }, { once: true });
 
-  // Show tooltip after player settles (~9s), auto-dismiss after 6s
+  // Show tooltip after player settles (~7.5s), auto-dismiss after 6s
   var tooltipTimer = setTimeout(function () {
     tooltip.classList.add('visible');
     setTimeout(function () { tooltip.classList.remove('visible'); }, 6000);
-  }, 9000);
+  }, 7500);
 
   function dismissTooltip() {
     clearTimeout(tooltipTimer);

@@ -1066,8 +1066,8 @@ footer {
   /* Hero */
   .hero-inner {
     grid-template-columns: 1fr;
-    padding: 88px 24px 56px;
-    gap: 32px;
+    padding: 72px 20px 48px;
+    gap: 24px;
   }
 
   .hero-eyebrow-text {
@@ -1247,7 +1247,7 @@ footer {
   justify-content: center;
   transition: background 0.25s, border-color 0.25s;
   flex-shrink: 0;
-  animation: musicPulse 2.5s ease-in-out 9s infinite;
+  animation: musicPulse 2.5s ease-in-out 7.5s infinite;
 }
 
 #music-btn:hover {
@@ -1370,21 +1370,53 @@ footer {
 
 @media (prefers-reduced-motion: no-preference) {
   #music-intro-bg {
-    animation: musicIntroBg 2.6s ease 6s both;
+    animation: musicIntroBg 2.6s ease 4.5s both;
   }
   #music-player {
-    animation: musicPlayerIntro 2.6s cubic-bezier(0.34, 1.56, 0.64, 1) 6s both;
+    animation: musicPlayerIntro 2.6s cubic-bezier(0.34, 1.56, 0.64, 1) 4.5s both;
   }
 }
 
 @media (max-width: 768px) {
+  /* Skip the dramatic fly-in on mobile — just fade in at the bottom */
+  #music-intro-bg {
+    animation: none;
+  }
   #music-player {
-    top: 68px;
-    left: 16px;
-    --mp-x: 16px;
-    --mp-y: 68px;
+    top: auto;
+    bottom: 20px;
+    left: auto;
+    right: 16px;
+    flex-direction: row-reverse; /* info strip expands leftward */
+    animation: fadeIn 0.5s ease 4.5s both;
+  }
+  /* Tooltip appears ABOVE the button on mobile (it sits at the bottom) */
+  #music-tooltip {
+    top: auto;
+    bottom: 62px;
+    left: auto;
+    right: 0;
+    transform: translateY(6px);
+  }
+  #music-tooltip.visible {
+    transform: translateY(0);
+  }
+  #music-tooltip::after {
+    bottom: auto;
+    top: 100%;
+    left: auto;
+    right: 18px;
+    border-bottom-color: transparent;
+    border-top-color: rgba(10, 10, 10, 0.9);
   }
   #music-info {
-    min-width: 130px;
+    min-width: 0;
+    max-width: calc(100vw - 88px); /* never overflow the viewport */
+  }
+  #music-track-name {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
