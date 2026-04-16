@@ -302,6 +302,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   if (!player || !btn || !audio) return;
 
   var trackLoaded = false;
+  var playPending = false; // guard against concurrent play() calls
 
   function pickRandomTrack() {
     var track = tracks[Math.floor(Math.random() * tracks.length)];
@@ -310,9 +311,10 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     audio.load(); // tell the browser to start loading — critical for iOS
   }
 
-  // On audio error: reset so the user can tap again — don't hide the player
+  // On audio error: reset button state but keep trackLoaded —
+  // the src is still valid, no need to re-fetch it
   audio.addEventListener('error', function () {
-    trackLoaded = false;
+    playPending = false;
     btn.setAttribute('aria-pressed', 'false');
     btn.setAttribute('aria-label', 'Play background music');
   });
@@ -340,29 +342,33 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 
   btn.addEventListener('click', function () {
     dismissTooltip();
+
+    // Block while a play() is still pending — rapid taps cause AbortError
+    if (playPending) return;
+
     if (audio.paused) {
-      // Fallback: if the pre-load timer hasn't fired yet (very fast tap),
-      // pick a track now. play() still works on desktop in this case.
+      // Fallback: if the pre-load timer hasn't fired yet (very fast tap)
       if (!trackLoaded) {
         pickRandomTrack();
         trackLoaded = true;
       }
-      // audio.play() returns a Promise in modern browsers,
-      // undefined in legacy ones — guard both paths
+      playPending = true;
       var playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise.then(function () {
+          playPending = false;
           btn.setAttribute('aria-pressed', 'true');
           btn.setAttribute('aria-label', 'Pause background music');
           info.setAttribute('aria-hidden', 'false');
           info.classList.add('visible');
         }).catch(function (err) {
-          // Play was prevented (policy, network, etc.) — reset so user can retry
+          playPending = false;
+          // Don't reset trackLoaded — src is still valid, just retry on next tap
           console.warn('Music play failed:', err);
-          trackLoaded = false;
         });
       } else {
         // Legacy browser — assume play started
+        playPending = false;
         btn.setAttribute('aria-pressed', 'true');
         btn.setAttribute('aria-label', 'Pause background music');
         info.setAttribute('aria-hidden', 'false');
