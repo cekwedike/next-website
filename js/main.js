@@ -187,11 +187,9 @@ lucide.createIcons();
     '#kca h2',
     '#kca .kca-header p',
     '#kca .glass-card',
-    '#stay-updated .section-tag',
-    '#stay-updated h2',
-    '#stay-updated .stay-inner > p',
-    '#stay-updated .subscribe-form',
-    '#stay-updated .social-links',
+    '#faq .section-tag',
+    '#faq h2',
+    '#faq .faq-item',
     'footer .footer-brand',
     'footer .footer-copy'
   ];
@@ -214,7 +212,7 @@ lucide.createIcons();
 
   // Mark fade-only elements
   var fadeOnly = ['#what-is-next .what-left p', '#for-artists .artists-card > p',
-    '#kca .kca-header p', '#stay-updated .stay-inner > p'];
+    '#kca .kca-header p'];
   document.querySelectorAll(fadeOnly.join(',')).forEach(function (el) {
     el.setAttribute('data-anim', 'fade');
   });
@@ -231,6 +229,66 @@ lucide.createIcons();
   }, { threshold: 0.12 });
 
   elements.forEach(function (el) { observer.observe(el); });
+}());
+
+// ─── FAQ ACCORDION ───
+(function () {
+  var items = Array.prototype.slice.call(document.querySelectorAll('.faq-item'));
+  if (!items.length) return;
+
+  var openItem = null;
+
+  function closeItem(item) {
+    var button = item.querySelector('.faq-question');
+    var answer = item.querySelector('.faq-answer');
+    if (!button || !answer) return;
+
+    item.classList.remove('is-open');
+    button.setAttribute('aria-expanded', 'false');
+    answer.style.maxHeight = '0px';
+  }
+
+  function openNewItem(item) {
+    var button = item.querySelector('.faq-question');
+    var answer = item.querySelector('.faq-answer');
+    if (!button || !answer) return;
+
+    item.classList.add('is-open');
+    button.setAttribute('aria-expanded', 'true');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+    openItem = item;
+  }
+
+  items.forEach(function (item) {
+    var button = item.querySelector('.faq-question');
+    var answer = item.querySelector('.faq-answer');
+    if (!button || !answer) return;
+
+    answer.style.maxHeight = '0px';
+    button.addEventListener('click', function () {
+      var isOpen = item.classList.contains('is-open');
+
+      if (openItem && openItem !== item) {
+        closeItem(openItem);
+      }
+
+      if (isOpen) {
+        closeItem(item);
+        openItem = null;
+        return;
+      }
+
+      openNewItem(item);
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    if (!openItem) return;
+    var answer = openItem.querySelector('.faq-answer');
+    if (answer) {
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
 }());
 
 // ─── SUBSCRIBE FORM (Formspree) ───
