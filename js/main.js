@@ -15,8 +15,10 @@
   }
 }());
 
-// Initialize Lucide icons
-lucide.createIcons();
+// Initialize Lucide icons only if the CDN loaded successfully.
+if (window.lucide && typeof window.lucide.createIcons === 'function') {
+  window.lucide.createIcons();
+}
 
 // ─── HERO BACKGROUND CAROUSEL ───
 (function () {
@@ -264,6 +266,8 @@ lucide.createIcons();
     var answer = item.querySelector('.faq-answer');
     if (!button || !answer) return;
 
+    button.setAttribute('aria-expanded', 'false');
+    answer.style.overflow = 'hidden';
     answer.style.maxHeight = '0px';
     button.addEventListener('click', function () {
       var isOpen = item.classList.contains('is-open');
